@@ -1,200 +1,63 @@
-﻿/*
+﻿//alert("Javascript для страницы 'о проекте' подключен!")
+
+/*
 * Запросим пользовательский ввод
 * и сохраним отзыв в объект
-* 
+*
 * */
 function getReview() {
     // Создадим объект
     let review = {}
-    
+
     // Сохраним свойство имени
     review["userName"] = prompt("Как вас зовут ?")
-    if(review["userName"] == null){
+    if (review["userName"] == null) {
         return
     }
-    
+
     // Сохраним текст отзыва
     review["comment"] = prompt("Напишите свой отзыв")
-    if(review["comment"] == null){
+    if (review["comment"] == null) {
         return
     }
-    
+
     // Сохраним текущее время
     review["date"] = new Date().toLocaleString()
-    
+
     // Добавим на страницу
     writeReview(review)
 }
 
-const writeReview = review => {
-   let likeCounter = '';
-  
-   // Для проверки, является ли объект отзывом, используем свойство hasOwnProperty
-   if(review.hasOwnProperty('rate')){
-       likeCounter += '           <b style="color: chocolate">Рейтинг:</b>   ' + review.rate;
-   }
-  
-   // Запишем результат
-   document.getElementsByClassName('reviews')[0].innerHTML += '    <div class="review-text">\n' +
-       `<p> <i> <b>${review['author']}</b>  ${review['date']}${likeCounter}</i></p>` +
-       `<p>${review['text']}</p>`  +
-       '</div>';
-}
-
 /*
- * Запишем объект на страницу
- *
- * */
-const writeReview = review => {
-	let likeCounter = '';
-
-	// Если публикуется отзыв - добавляем ему кнопку с лайками.
-	if (review.hasOwnProperty('rate')) {
-
-		// Генерим идентификатор комментария.
-		let commentId = Math.random();
-		// Для кнопки лайков добавляем: идентификатор, атрибут onclick для передачи идентификатора в функцию, значок лайка, и само значение счётчика отделяем пробелом
-		// Также мы добавили стиль, чтобы кнопка смотрелась лучше и не имела рамок
-		likeCounter += '<button id="' + commentId + '" style="border: none" onclick="addLike(this.id)">' + `❤️ ${review.rate}</button>`
-	}
-	// Запишем результат 
-	document.getElementsByClassName('reviews')[0].innerHTML += ' <div class="review-    text">\n' + `<p> <i> <b>${review['author']}</b> ${review['date']}${likeCounter}</i></p>` + `<p>${review['text']}</p>` + '</div>';
-}
-
-/*
-* Конструктор, через который создаётся комментарий
-*
-* */
-function Comment() {
-   // Запросим имя
-   this.author = prompt("Как вас зовут ?")
-   if(this.author == null){
-       this.empty = true
-       return
-   }
- 
-   // Запросим текст
-   this.text = prompt("Оставьте отзыв")
-   if(this.text == null){
-       this.empty = true
-       return
-   }
- 
-   // Сохраним текущее время
-   this.date = new Date().toLocaleString()
-}
- 
-/*
-* Запишем объект на страницу
+* Запишем отзыв на страницу
 *
 * */
 const writeReview = review => {
-   let likeCounter = '';
-  
-   // Для проверки, является ли объект отзывом, используем свойство hasOwnProperty
-   if(review.hasOwnProperty('rate')){
-       likeCounter += '           <b style="color: chocolate">Рейтинг:</b>   ' + review.rate;
-   }
-  
-   // Запишем результат
-document.getElementsByClassName('reviews')[0].innerHTML += '    <div class="review-text">\n' +
-       `<p> <i> <b>${review['author']}</b>  ${review['date']}${likeCounter}</i></p>` +
-       `<p>${review['text']}</p>`  +
-       '</div>';
+    document.getElementsByClassName('reviews')[0].innerHTML += '    <div class="review-text">\n' +
+        `<p> <i> <b>${review['userName']}</b>  ${review['date']}</i></p>` +
+        `<p>${review['comment']}</p>` +
+        '</div>';
 }
 
-/*
-* Оставить комментарий
-*
-* */
-function addComment() {
-   let comment = new Comment()
-  
-   // проверяем, успешно ли юзер осуществил ввод
-   if(comment.empty){
-       return;
-   }
-  
-   // Запросим, хочет ли пользователь оставить полноценный отзыв или это будет обычный комментарий
-   let enableLikes = confirm('Разрешить пользователям оценивать ваш отзыв?')
-  
-   if(enableLikes){
-       // Создадим для отзыва новый объект из прототипа - комментария
-       let review = Object.create(comment)
-       // и добавим ему нужное свойство
-       review.rate = 0;
- 
-       // Добавляем отзыв с возможностью пользовательских оценок
-       writeReview(review)
-   } else{
-       // Добавим простой комментарий без возможности оценки
-       writeReview(comment)
-   }
-}
-
-/*
-* Увеличивает счётчик лайков
-*
-* */
-function addLike(id) {
-   // Найдём нужный элемент по id
-   let element = document.getElementById(id);
-  
-   // Преобразуем текст элемента в массив, разбив его по пробелам (так как счётчик лайков у нас отделен от символа ❤️пробелом)
-   let array = element.innerText.split(' ')
-  
-   // Вытащим искомое значение счётчика и сразу же преобразуем его в число, так как
-   // при сложении любого значения со строкой в JS будет строка, а нам этого не требуется
-   let resultNum = parseInt(array[array.length - 1], 10);
-  
-   // Увеличим счётчик
-   resultNum += 1
-  
-   // Сохраним измененное значение обратно в массив
-   array[array.length - 1] =  `${resultNum}`
-  
-   // Обновим текст элемента
-    element.innerText = array.join(' ')   
-}
-
-/* Устанавливаем стартовый индекс слайда по умолчанию: */
-let slideIndex = 1;
-/* Вызываем функцию, которая реализована ниже: */
-showSlides(slideIndex);
-
-/* Увеличиваем индекс на 1 — показываем следующий слайд: */
-function nextSlide() {
-    showSlides(slideIndex += 1);
-}
-
-/* Уменьшаем индекс на 1 — показываем предыдущий слайд: */
-function previousSlide() {
-    showSlides(slideIndex -= 1);
-}
-
-/* Устанавливаем текущий слайд: */
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
-
-/* Функция перелистывания: */
-function showSlides(n) {
-    /* Обращаемся к элементам с названием класса "item", то есть к картинкам: */
-    let slides = document.getElementsByClassName("item");
-    console.log(slides)
-
-    /* Проверяем количество слайдов: */
-    if (n > slides.length) {
-        slideIndex = 1
+/*Слайдер*/
+var indexValue = 1;
+showImg(indexValue);
+function btm_slide(num) { showImg(indexValue = num); }
+function side_slide(num) { showImg(indexValue += num); }
+function showImg(num) {
+    var i;
+    const img = document.querySelectorAll('img');
+    const slider = document.querySelectorAll('.btm-slides span');
+    if (num > img.length)
+        indexValue = 1;
+    if (num < 1)
+        indexValue = img.length;
+    for (i = 0; i < img.length; i++) {
+        img[i].style.display = "none";
     }
-    if (n < 1) {
-        slideIndex = slides.length
+    for (i = 0; i < slider.length; i++) {
+        slider[i].style.background = "rgba(255,255,255,0.2)";
     }
-
-    /* Проходим по каждому слайду в цикле for: */
-    for (let slide of slides) {
-        slide.style.display = "none";
-    }
-    /* Делаем элемент блочным: */
-    slides[slideIndex - 1].style.display = "block";
+    img[indexValue - 1].style.display = "block";
+    slider[indexValue - 1].style.background = "rgba(255,255,255,0.7)";
 }

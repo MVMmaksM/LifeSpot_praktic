@@ -1,22 +1,18 @@
-﻿<!-- Основной блок слайдера -->
-<div class="slider">
-
-    <!-- Первый слайд -->
-    <div class="item">
-        <img src="https://www.dahockey.ru/upload/iblock/5a4/sddxte4f180e028ir73aipwobriw348g/b71d20047b9c4e99dcc900af477dcf3d.jpg">
+﻿﻿<div class="slider">
+    <div class="images">
+        <img src="https://arenda-vesta.ru/app/uploads/2020/10/23_90.jpg">
+        <img src="https://s1.1zoom.ru/big0/514/England_Rivers_Bridges_Riverboat_Evening_London_590744_1280x853.jpg">
+        <img src="https://sportishka.com/uploads/posts/2022-04/1650652520_40-sportishka-com-p-nyu-york-ulitsi-krasivo-foto-46.jpg">
     </div>
-
-    <!-- Второй слайд -->
-    <div class="item">
-        <img src="https://image2.turizm.ru/country_gallery/37/770-300_MypRS0iEEX0HDwxhiQ4Oq1xapuzOnk3t.jpg?q=95">
+    <div class="btm-slides">
+        <span onclick="btm_slide(1)"></span>
+        <span onclick="btm_slide(2)"></span>
+        <span onclick="btm_slide(3)"></span>
     </div>
-
-    <!-- Третий слайд -->
-    <div class="item">
-        <img src="https://farm5.staticflickr.com/4828/31108723127_e603b3da38_o.jpg">
+    <div class="arrow left" onclick="side_slide(-1)">
+        <span>prev</span>
     </div>
-
-    <!-- Кнопки-стрелочки -->
-    <a class="previous" onclick="previousSlide()">&#10094;</a>
-    <a class="next" onclick="nextSlide()">&#10095;</a>
+    <div class="arrow right" onclick="side_slide(1)">
+        <span>next</span>
+    </div>
 </div>
